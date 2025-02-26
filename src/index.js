@@ -1,5 +1,7 @@
 import "./style.scss";
 
+const ul = document.querySelector("ul");
+
 const todos = [
   {
     task: "Emmerder le monde",
@@ -16,5 +18,21 @@ const todos = [
 ];
 
 const displayTodo = () => {
-  const todosMode = todos.map();
+  const todosNode = todos.map((todo, index) => {
+    return createTodoElement(todo, index);
+  });
+
+  ul.innerHTML = "";
+  ul.append(...todosNode);
 };
+
+const createTodoElement = (todo, index) => {
+  const li = document.createElement("li");
+  li.innerHTML = `<span class="todo ${todo.done ? "done" : ""}"></span>
+          <p>${todo.task}</p>
+          <button>Edit</button>
+          <button>Delete</button>`;
+  return li;
+};
+
+displayTodo();
