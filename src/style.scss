@@ -1,5 +1,6 @@
 * {
   box-sizing: border-box;
+  font-family: "Source Code Pro", serif;
 }
 
 p {
@@ -67,6 +68,11 @@ body {
 
         p {
           flex: 1;
+        }
+
+        input {
+          flex: 1;
+          margin-right: 10px;
         }
       }
     }
