@@ -21,6 +21,8 @@
   },
   "homepage": "https://github.com/CCDevX/vanilla-js-todolist#readme",
   "devDependencies": {
+    "sass": "^1.85.1",
+    "sass-embedded": "^1.85.1",
     "vite": "^6.2.0"
   }
 }
