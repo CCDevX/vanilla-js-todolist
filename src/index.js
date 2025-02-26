@@ -1,6 +1,18 @@
 import "./style.scss";
 
 const ul = document.querySelector("ul");
+const form = document.querySelector("form");
+const addInput = document.querySelector("form > input");
+
+//console.log(form, input);
+
+form.addEventListener("submit", (event) => {
+  event.preventDefault();
+  const task = addInput.value;
+  addInput.value = "";
+  addTodo(task);
+  displayTodo();
+});
 
 const todos = [
   {
@@ -33,6 +45,10 @@ const createTodoElement = (todo, index) => {
           <button>Edit</button>
           <button>Delete</button>`;
   return li;
+};
+
+const addTodo = (task) => {
+  todos.push({ task, done: false });
 };
 
 displayTodo();
