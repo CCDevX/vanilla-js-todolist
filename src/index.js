@@ -11,7 +11,6 @@ form.addEventListener("submit", (event) => {
   const task = addInput.value;
   addInput.value = "";
   addTodo(task);
-  displayTodo();
 });
 
 const todos = [
@@ -40,15 +39,27 @@ const displayTodo = () => {
 
 const createTodoElement = (todo, index) => {
   const li = document.createElement("li");
+  const deleteButton = document.createElement("button");
+  deleteButton.innerHTML = "Supprimer";
+  deleteButton.addEventListener("click", (event) => {
+    deleteTodo(index);
+  });
+
   li.innerHTML = `<span class="todo ${todo.done ? "done" : ""}"></span>
           <p>${todo.task}</p>
-          <button>Edit</button>
-          <button>Delete</button>`;
+          <button>Edit</button>`;
+  li.appendChild(deleteButton);
   return li;
 };
 
 const addTodo = (task) => {
   todos.push({ task, done: false });
+  displayTodo();
+};
+
+const deleteTodo = (index) => {
+  todos.splice(index, 1);
+  displayTodo();
 };
 
 displayTodo();
