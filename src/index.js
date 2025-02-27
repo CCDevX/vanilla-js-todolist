@@ -89,7 +89,7 @@ const createEditTodoElement = (todo, index) => {
 };
 
 const addTodo = (task) => {
-  task.trim();
+  task = task.trim();
   if (task) {
     todos.push({
       task: `${task[0].toUpperCase()}${task.slice(1)}`,
@@ -118,7 +118,7 @@ const toggleEditTodo = (index) => {
 const editTodo = (index, editInput) => {
   const editTask = editInput.value;
 
-  editTask.trim();
+  editTask = editTask.trim();
   if (editTask) {
     todos[index].task = `${editTask[0].toUpperCase()}${editTask.slice(1)}`;
     toggleEditTodo(index);
