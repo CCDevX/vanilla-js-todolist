@@ -116,7 +116,7 @@ const toggleEditTodo = (index) => {
 };
 
 const editTodo = (index, editInput) => {
-  const editTask = editInput.value;
+  let editTask = editInput.value;
 
   editTask = editTask.trim();
   if (editTask) {
