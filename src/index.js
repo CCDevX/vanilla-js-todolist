@@ -4,8 +4,6 @@ const ul = document.querySelector("ul");
 const form = document.querySelector("form");
 const addInput = document.querySelector("form > input");
 
-//console.log(form, input);
-
 form.addEventListener("submit", (event) => {
   event.preventDefault();
   const task = addInput.value;
@@ -13,22 +11,7 @@ form.addEventListener("submit", (event) => {
   addTodo(task);
 });
 
-const todos = [
-  {
-    task: "Emmerder le monde",
-    done: false,
-  },
-  {
-    task: "Manger une pomme",
-    done: false,
-    editMode: false,
-  },
-  {
-    task: "Faire du café",
-    done: true,
-    editMode: false,
-  },
-];
+const todos = [];
 
 const displayTodo = () => {
   const todosNode = todos.map((todo, index) => {
@@ -45,11 +28,13 @@ const displayTodo = () => {
 
 const createTodoElement = (todo, index) => {
   const li = document.createElement("li");
+
   const deleteButton = document.createElement("button");
   deleteButton.innerHTML = "Delete";
+  deleteButton.classList.add("danger");
   const editButton = document.createElement("button");
   editButton.innerHTML = "Edit";
-
+  editButton.classList.add("primary");
   deleteButton.addEventListener("click", (event) => {
     event.stopPropagation();
     deleteTodo(index);
@@ -61,7 +46,7 @@ const createTodoElement = (todo, index) => {
   });
 
   li.innerHTML = `<span class="todo ${todo.done ? "done" : ""}"></span>
-          <p>${todo.task}</p>`;
+          <p class="${todo.done ? "text-done" : ""}">${todo.task}</p>`;
   li.addEventListener("click", (event) => {
     toggleTodo(index);
   });
@@ -74,10 +59,20 @@ const createEditTodoElement = (todo, index) => {
   const editInput = document.createElement("input");
   editInput.type = "text";
   editInput.value = todo.task;
+  editInput.addEventListener("keydown", (event) => {
+    if (event.key === "Enter") {
+      editTodo(index, editInput);
+    } else if (event.key === "Escape") {
+      toggleEditTodo(index);
+    }
+  });
+
   const saveButton = document.createElement("button");
   saveButton.innerHTML = "Save";
+  saveButton.classList.add("success");
   const cancelButton = document.createElement("button");
   cancelButton.innerHTML = "Cancel";
+  cancelButton.classList.add("danger");
 
   cancelButton.addEventListener("click", (event) => {
     event.stopPropagation();
@@ -94,8 +89,15 @@ const createEditTodoElement = (todo, index) => {
 };
 
 const addTodo = (task) => {
-  todos.push({ task, done: false, editMode: false });
-  displayTodo();
+  task.trim();
+  if (task) {
+    todos.push({
+      task: `${task[0].toUpperCase()}${task.slice(1)}`,
+      done: false,
+      editMode: false,
+    });
+    displayTodo();
+  }
 };
 
 const deleteTodo = (index) => {
@@ -115,9 +117,12 @@ const toggleEditTodo = (index) => {
 
 const editTodo = (index, editInput) => {
   const editTask = editInput.value;
-  todos[index].task = editTask;
-  toggleEditTodo(index);
-  displayTodo();
+
+  editTask.trim();
+  if (editTask) {
+    todos[index].task = `${editTask[0].toUpperCase()}${editTask.slice(1)}`;
+    toggleEditTodo(index);
+  }
 };
 
 displayTodo();
