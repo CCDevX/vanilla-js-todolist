@@ -1,131 +1,798 @@
+@use "sass:color";
+@use "sass:math";
+
+$primary: #6366f1;
+$primary-light: #818cf8;
+$primary-dark: #4f46e5;
+$primary-darker: color.adjust($primary-dark, $lightness: -5%);
+$primary-bg: rgba(99, 102, 241, 0.1);
+
+$gray-50: #f8fafc;
+$gray-100: #f1f5f9;
+$gray-200: #e2e8f0;
+$gray-300: #cbd5e1;
+$gray-400: #94a3b8;
+$gray-500: #64748b;
+$gray-600: #475569;
+$gray-700: #334155;
+$gray-800: #1e293b;
+$gray-900: #0f172a;
+
+$success: #10b981;
+$success-dark: #059669;
+$success-bg: rgba(16, 185, 129, 0.1);
+
+$warning: #f59e0b;
+$warning-dark: #d97706;
+$warning-bg: rgba(245, 158, 11, 0.1);
+
+$danger: #ef4444;
+$danger-dark: #dc2626;
+$danger-bg: rgba(239, 68, 68, 0.1);
+
+$white: #ffffff;
+$radius: 12px;
+$radius-lg: 16px;
+$radius-sm: 8px;
+$shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+$shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+$shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+
+// Reset amélioré
 * {
   box-sizing: border-box;
-  font-family: "Source Code Pro", serif;
-}
-
-p {
   margin: 0;
+  padding: 0;
 }
 
-input {
-  padding: 8px 15px;
-  outline: 0;
-  border: 1px solid #ddd;
-  border-radius: 3px;
+body {
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
+  background: linear-gradient(135deg, $gray-50 0%, $gray-100 100%);
+  min-height: 100vh;
+  padding: 20px;
+  color: $gray-900;
+  line-height: 1.6;
+  font-size: 16px;
 }
 
-button {
-  padding: 5px 15px;
-  border: 0;
-  border-radius: 5px;
-  cursor: pointer;
-  margin: 0 3px;
-  outline: 0;
-  &.add {
-    background-color: #1e90ff;
-    color: white;
+// Container principal avec design moderne
+.app-container {
+  max-width: 720px;
+  margin: 0 auto;
+}
 
-    &:hover {
-      background-color: #0077cc;
+// En-tête amélioré
+.header {
+  text-align: center;
+  margin-bottom: 32px;
+
+  h1 {
+    font-size: 36px;
+    font-weight: 700;
+    color: $gray-900;
+    margin-bottom: 8px;
+    letter-spacing: -0.025em;
+
+    @media (max-width: 640px) {
+      font-size: 28px;
     }
   }
-  &.danger {
-    background: #e63946;
-    color: white;
+
+  p {
+    color: $gray-600;
+    font-size: 18px;
+    margin-bottom: 24px;
+
+    @media (max-width: 640px) {
+      font-size: 16px;
+    }
+  }
+
+  // Statistiques avec style moderne
+  .stats {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    flex-wrap: wrap;
+
+    .stat {
+      background: $white;
+      padding: 16px 32px;
+      border-radius: $radius;
+      box-shadow: $shadow;
+      border: 1px solid $gray-200;
+      min-width: 120px;
+      transition: all 0.3s ease;
+
+      &:hover {
+        transform: translateY(-2px);
+        box-shadow: $shadow-lg;
+      }
+
+      .stat-number {
+        display: block;
+        font-size: 28px;
+        font-weight: 700;
+        color: $primary;
+        line-height: 1;
+        margin-bottom: 4px;
+      }
+
+      .stat-label {
+        display: block;
+        font-size: 14px;
+        color: $gray-600;
+        font-weight: 500;
+      }
+    }
+  }
+}
+
+// Content avec ombre et bordure subtile
+.content {
+  background: $white;
+  border-radius: $radius-lg;
+  box-shadow: $shadow-xl;
+  border: 1px solid $gray-200;
+  overflow: hidden;
+}
+
+// Container principal
+.container {
+  padding: 32px;
+
+  // Formulaire moderne
+  form {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 28px;
+    flex-wrap: wrap;
+
+    input[type="text"] {
+      flex: 1;
+      min-width: 250px;
+      padding: 14px 18px;
+      border: 2px solid $gray-300;
+      border-radius: $radius;
+      font-size: 16px;
+      background: $white;
+      color: $gray-900;
+      transition: all 0.2s ease;
+      font-weight: 500;
+
+      &:focus {
+        outline: none;
+        border-color: $primary;
+        box-shadow: 0 0 0 4px $primary-bg;
+        transform: translateY(-1px);
+      }
+
+      &::placeholder {
+        color: $gray-400;
+        font-weight: 400;
+      }
+    }
+
+    select {
+      padding: 14px 18px;
+      border: 2px solid $gray-300;
+      border-radius: $radius;
+      background: $white;
+      color: $gray-700;
+      font-size: 15px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      min-width: 140px;
+
+      &:focus {
+        outline: none;
+        border-color: $primary;
+        box-shadow: 0 0 0 4px $primary-bg;
+      }
+
+      &:hover {
+        border-color: $gray-400;
+      }
+    }
+  }
+
+  // Filtres redesignés
+  .filters {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 28px;
+    flex-wrap: wrap;
+    justify-content: center;
+
+    .filter-btn {
+      padding: 10px 20px;
+      border: 2px solid $gray-200;
+      background: $white;
+      color: $gray-600;
+      border-radius: 24px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+
+      &:hover {
+        background: $gray-50;
+        border-color: $gray-300;
+        transform: translateY(-1px);
+      }
+
+      &.active {
+        background: $primary;
+        color: $white;
+        border-color: $primary;
+        box-shadow: 0 4px 12px rgba(99, 102, 241, 0.25);
+      }
+    }
+  }
+
+  // Liste des tâches améliorée
+  ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+
+    li {
+      display: flex;
+      align-items: center;
+      padding: 20px;
+      background: $white;
+      border: 2px solid $gray-200;
+      border-radius: $radius;
+      transition: all 0.2s ease;
+      position: relative;
+      overflow: hidden;
+
+      &:hover {
+        border-color: $gray-300;
+        box-shadow: $shadow-lg;
+        transform: translateX(4px);
+      }
+
+      // Indicateur de priorité redesigné
+      &::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        width: 4px;
+        transition: width 0.2s ease;
+      }
+
+      &:hover::before {
+        width: 6px;
+      }
+
+      &.high-priority::before {
+        background: linear-gradient(180deg, $danger, $danger-dark);
+      }
+
+      &.medium-priority::before {
+        background: linear-gradient(180deg, $warning, $warning-dark);
+      }
+
+      &.low-priority::before {
+        background: linear-gradient(180deg, $success, $success-dark);
+      }
+
+      // Checkbox moderne - CORRECTION ICI
+      .todo-checkbox {
+        width: 24px;
+        height: 24px;
+        border: 2px solid $gray-300;
+        border-radius: 6px;
+        margin-right: 16px;
+        margin-left: 8px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        background: $white;
+        position: relative;
+
+        &:hover {
+          border-color: $primary;
+          transform: scale(1.1);
+        }
+
+        &.checked {
+          background: linear-gradient(135deg, $primary, $primary-dark);
+          border-color: $primary-dark;
+          animation: checkAnimation 0.3s ease-out;
+
+          &::after {
+            content: "✓";
+            color: $white;
+            font-size: 14px;
+            font-weight: 700;
+            animation: checkmarkAnimation 0.3s ease-out;
+          }
+        }
+      }
+
+      // Contenu de la tâche
+      .todo-content {
+        flex: 1;
+
+        .todo-text {
+          font-size: 16px;
+          color: $gray-900;
+          font-weight: 500;
+          margin-bottom: 4px;
+          transition: all 0.2s ease;
+
+          &.completed {
+            text-decoration: line-through;
+            color: $gray-500;
+            opacity: 0.8;
+          }
+        }
+
+        .todo-priority {
+          font-size: 13px;
+          color: $gray-500;
+          font-weight: 500;
+        }
+      }
+
+      // Actions améliorées
+      .todo-actions {
+        display: flex;
+        gap: 8px;
+        opacity: 0;
+        transition: opacity 0.2s ease;
+
+        button {
+          padding: 8px 14px;
+          font-size: 13px;
+          border-radius: $radius-sm;
+          font-weight: 600;
+          transition: all 0.2s ease;
+
+          &.btn-warning {
+            background: $warning-bg;
+            color: $warning-dark;
+            border: 1px solid transparent;
+
+            &:hover {
+              background: $warning;
+              color: $white;
+              transform: translateY(-1px);
+            }
+          }
+
+          &.btn-danger {
+            background: $danger-bg;
+            color: $danger-dark;
+            border: 1px solid transparent;
+
+            &:hover {
+              background: $danger;
+              color: $white;
+              transform: translateY(-1px);
+            }
+          }
+
+          &.btn-success {
+            background: $success;
+            color: $white;
+            border: 1px solid transparent;
+
+            &:hover {
+              background: $success-dark;
+              transform: translateY(-1px);
+            }
+          }
+
+          &.btn-outline {
+            background: transparent;
+            color: $gray-600;
+            border: 1px solid $gray-300;
+
+            &:hover {
+              background: $gray-50;
+              border-color: $gray-400;
+            }
+          }
+        }
+      }
+
+      // Hover pour desktop
+      &:hover .todo-actions {
+        opacity: 1;
+      }
+
+      // Actions toujours visibles sur mobile
+      @media (max-width: 640px) {
+        .todo-actions {
+          opacity: 1;
+        }
+      }
+
+      // État terminé
+      &.completed {
+        background: $gray-50;
+        opacity: 0.9;
+
+        &:hover {
+          opacity: 1;
+        }
+      }
+
+      // Input d'édition stylisé
+      .todo-input {
+        flex: 1;
+        padding: 10px 14px;
+        border: 2px solid $primary;
+        border-radius: $radius-sm;
+        font-size: 15px;
+        font-weight: 500;
+        background: $white;
+
+        &:focus {
+          outline: none;
+          box-shadow: 0 0 0 4px $primary-bg;
+        }
+      }
+
+      .todo-priority-select {
+        width: 100%;
+        padding: 8px 12px;
+        border: 2px solid $gray-200;
+        border-radius: $radius-sm;
+        background: $gray-50;
+        font-size: 14px;
+        cursor: pointer;
+        margin-top: 8px;
+
+        &:focus {
+          outline: none;
+          border-color: $primary;
+          background: $white;
+        }
+      }
+    }
+  }
+}
+
+// Boutons redesignés
+button {
+  padding: 14px 24px;
+  border: none;
+  border-radius: $radius;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: $gray-100;
+  color: $gray-700;
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.5);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+  }
+
+  &:active::before {
+    width: 300px;
+    height: 300px;
+  }
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: $shadow-lg;
+  }
+
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.2);
+  }
+
+  // Bouton principal
+  &.add {
+    background: linear-gradient(135deg, $primary, $primary-dark);
+    color: $white;
+    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.25);
 
     &:hover {
-      background-color: #c62828;
+      background: linear-gradient(135deg, $primary-dark, $primary-darker);
+      box-shadow: 0 6px 20px rgba(99, 102, 241, 0.35);
+    }
+  }
+
+  // Variantes de boutons
+  &.danger {
+    background: $danger-bg;
+    color: $danger-dark;
+
+    &:hover {
+      background: $danger;
+      color: $white;
     }
   }
 
   &.primary {
-    background-color: #ffca3a;
-    color: white;
+    background: $warning-bg;
+    color: $warning-dark;
 
     &:hover {
-      background-color: #e0b100;
+      background: $warning;
+      color: $white;
     }
   }
 
   &.success {
-    background: #06d6a0;
-    color: white;
+    background: $success-bg;
+    color: $success-dark;
 
     &:hover {
-      background-color: #04b383;
+      background: $success;
+      color: $white;
     }
   }
 }
 
-body {
-  background: #f3f4f6;
-  margin: 0;
-  min-height: 100vh;
+// État vide amélioré
+.empty-state {
+  text-align: center;
+  padding: 60px 24px;
+  color: $gray-500;
+
+  .empty-icon {
+    font-size: 64px;
+    margin-bottom: 20px;
+    opacity: 0.3;
+    animation: float 3s ease-in-out infinite;
+  }
+
+  h3 {
+    font-size: 20px;
+    margin-bottom: 12px;
+    color: $gray-700;
+    font-weight: 600;
+  }
+
+  p {
+    font-size: 15px;
+    color: $gray-500;
+    max-width: 320px;
+    margin: 0 auto;
+    line-height: 1.6;
+  }
+}
+
+// Actions globales
+.global-actions {
   display: flex;
-  align-items: center;
+  gap: 12px;
   justify-content: center;
-  h1 {
-    margin-bottom: 50px;
-    font-size: 36px;
-    letter-spacing: 3px;
-    text-align: center;
+  margin-top: 28px;
+  padding-top: 28px;
+  border-top: 2px solid $gray-100;
+  flex-wrap: wrap;
+}
+
+// Notification moderne
+.notification {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  background: $gray-900;
+  color: $white;
+  padding: 16px 24px;
+  border-radius: $radius;
+  font-size: 15px;
+  font-weight: 500;
+  box-shadow: $shadow-xl;
+  transform: translateY(100px);
+  opacity: 0;
+  transition: all 0.3s ease;
+  max-width: 320px;
+  z-index: 1000;
+
+  &.show {
+    transform: translateY(0);
+    opacity: 1;
+  }
+
+  &.success {
+    background: linear-gradient(135deg, $success, $success-dark);
+  }
+
+  &.error {
+    background: linear-gradient(135deg, $danger, $danger-dark);
+  }
+}
+
+// État vide pour les filtres
+.empty-filter {
+  text-align: center;
+  padding: 40px 20px;
+  color: $gray-500;
+  font-style: italic;
+  list-style: none;
+}
+
+// Responsive amélioré
+@media (max-width: 640px) {
+  body {
+    padding: 12px;
+  }
+
+  .content {
+    border-radius: $radius;
   }
 
   .container {
-    width: 500px;
-    border: 1px solid #eee;
-    border-radius: 3px;
     padding: 20px;
-    display: flex;
-    flex-direction: column;
 
     form {
-      margin-bottom: 20px;
-      display: flex;
-      input {
-        flex: 1;
-        margin-right: 15px;
+      gap: 10px;
+
+      input[type="text"] {
+        min-width: 100%;
+      }
+
+      select {
+        min-width: 100%;
+      }
+
+      button {
+        width: 100%;
       }
     }
 
-    ul {
-      padding: 0;
-      list-style: none;
-      li {
-        display: flex;
-        align-items: center;
-        padding: 10px 0px;
-        cursor: pointer;
-        .todo {
-          flex: 0 0 20px;
-          height: 20px;
-          border-radius: 30px;
-          margin-right: 15px;
-          border: 2px solid #333;
-        }
+    .filters {
+      gap: 8px;
 
-        .done {
-          background: #333;
-        }
+      .filter-btn {
+        padding: 8px 16px;
+        font-size: 13px;
+      }
+    }
 
-        p {
-          flex: 1;
-          &:hover {
-            background: lightblue;
-            border-radius: 5px;
-            padding: 10px 0px 10px 5px;
-          }
-        }
+    ul li {
+      padding: 16px;
 
-        .text-done {
-          text-decoration: line-through;
-        }
+      .todo-checkbox {
+        margin-right: 12px;
+        margin-left: 4px;
+      }
 
-        input {
-          flex: 1;
-          margin-right: 10px;
+      .todo-actions {
+        button {
+          padding: 6px 10px;
+          font-size: 12px;
         }
       }
     }
+  }
+
+  button {
+    font-size: 14px;
+    padding: 12px 20px;
+  }
+
+  .notification {
+    left: 12px;
+    right: 12px;
+    bottom: 12px;
+  }
+}
+
+// Animations
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes checkAnimation {
+  0% {
+    transform: scale(0.8);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes checkmarkAnimation {
+  from {
+    opacity: 0;
+    transform: scale(0);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes slideOut {
+  to {
+    opacity: 0;
+    transform: translateX(20px);
+    max-height: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    margin: 0;
+  }
+}
+
+// Animation d'entrée pour les nouveaux éléments
+.container ul li {
+  animation: slideIn 0.3s ease-out;
+}
+
+// Animation de suppression
+.removing {
+  animation: slideOut 0.3s ease-out forwards;
+}
+
+// Focus amélioré
+input:focus,
+select:focus,
+button:focus {
+  position: relative;
+  z-index: 1;
+}
+
+// Style d'impression
+@media print {
+  .header .stats,
+  .filters,
+  .global-actions,
+  .todo-actions,
+  .notification,
+  form {
+    display: none !important;
+  }
+
+  body {
+    background: white;
+  }
+
+  .content {
+    box-shadow: none;
+    border: none;
   }
 }
